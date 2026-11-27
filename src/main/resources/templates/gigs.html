@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse Gigs</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; }
+        .gig { border: 1px solid #ccc; border-radius: 6px; padding: 12px 16px; margin-bottom: 14px; }
+        input[type=text] { padding: 8px; width: 60%; }
+        button { padding: 8px 16px; }
+    </style>
+</head>
+<body>
+<h2>Available gigs</h2>
+
+<form th:action="@{/gigs}" method="get">
+    <input type="text" name="keyword" th:value="${keyword}" placeholder="Search by title">
+    <button type="submit">Search</button>
+</form>
+
+<p th:if="${#lists.isEmpty(gigs)}">No gigs found.</p>
+
+<div class="gig" th:each="gig : ${gigs}">
+    <h3 th:text="${gig.title}"></h3>
+    <p th:text="${gig.description}"></p>
+    <p>Budget: ₹<span th:text="${gig.budget}"></span>
+        | Posted by <span th:text="${gig.client.name}"></span></p>
+</div>
+
+<p><a th:href="@{/dashboard}">Back to dashboard</a></p>
+</body>
+</html>
